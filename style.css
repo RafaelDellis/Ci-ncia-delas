@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+#globo {
+    width: 100vw;
+    height: 100vh;
+}
+
+.titulo {
+    position: absolute;
+    top: 40px;
+    left: 50px;
+    color: white;
+    z-index: 10;
+}
+
+.titulo h1 {
+    font-size: 35px;
+    letter-spacing: 3px;
+}
+
+.titulo p {
+    margin-top: 8px;
+    font-size: 16px;
+}
