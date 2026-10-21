@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AMANI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;900&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
 </head>
@@ -37,11 +40,22 @@
         <p>Explore a ciência africana</p>
     </div>
 
+    <button id="abrirQuiz">Qual cientista africana é você?</button>
+ 
+    <div id="quiz">
+        <div id="quizCaixa">
+            <button id="fecharQuiz">×</button>
+            <div id="quizConteudo"></div>
+        </div>
+    </div>
+ 
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="script.js"></script>
+ 
+    <script src="quiz.js"></script>
 
 </body>
 

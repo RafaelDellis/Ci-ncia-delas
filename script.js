@@ -22,7 +22,8 @@ const camera = new THREE.PerspectiveCamera(
 );
 
 const renderizador = new THREE.WebGLRenderer({
-    antialias: true
+    antialias: true,
+    alpha: true
 });
 
 renderizador.setSize(
@@ -179,7 +180,7 @@ function desenharPais(poligono) {
 
         const material =
             new THREE.LineBasicMaterial({
-                color: 0xFFFFFF
+                color: 0xEEA11D
             });
 
         const linha =
@@ -215,7 +216,7 @@ function criarPontoCientista(cientista) {
 
     const materialPonto =
         new THREE.MeshBasicMaterial({
-            color: 0xff4444
+            color: 0xE8431A
         });
 
     const ponto =

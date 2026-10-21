@@ -1,92 +1,590 @@
+:root {
+    --terracota: #A34512;
+    --laranja: #CB7218;
+    --ouro: #D19221;
+    --sol: #EEA11D;
+    --oliva: #907D39;
+    --oliva-esc: #6D5E33;
+    --mata: #2D2C1A;
+    --marrom: #300E00;
+    --creme: #F0E7D8;
+    --creme-esc: #E1D2B6;
+    --papel: #FBF5EA;
+ 
+    --fonte-titulo: "Fraunces", Georgia, "Times New Roman", serif;
+    --fonte-texto: "Nunito", "Segoe UI", Arial, sans-serif;
+ 
+    --faixa-triangulos: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='16' viewBox='0 0 28 16'%3E%3Crect width='28' height='16' fill='%23300E00'/%3E%3Cpath d='M0 16 L14 2 L28 16 Z' fill='%23CB7218'/%3E%3Cpath d='M7 16 L14 9 L21 16 Z' fill='%23300E00'/%3E%3Cpath d='M0 0 L7 0 L0 7 Z M28 0 L21 0 L28 7 Z' fill='%23D19221'/%3E%3C/svg%3E");
+    --faixa-circulos: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='12' viewBox='0 0 22 12'%3E%3Ccircle cx='11' cy='6' r='4.6' fill='none' stroke='%23D19221' stroke-width='1.6'/%3E%3Ccircle cx='11' cy='6' r='1.6' fill='%23CB7218'/%3E%3C/svg%3E");
+}
+ 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
+ 
 body {
-    background: #000;
+    background: #110703;
     overflow: hidden;
-    font-family: Arial, sans-serif;
+    font-family: var(--fonte-texto);
+    color: var(--creme);
 }
-
+ 
+ 
+/* =========================
+   FUNDO: escuro, com brilho suave
+   ========================= */
+ 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+ 
+    background:
+        /* vinheta nas bordas */
+        radial-gradient(ellipse at 50% 50%,
+            transparent 55%,
+            rgba(0, 0, 0, 0.55) 100%),
+        /* brilho quente atrás do globo */
+        radial-gradient(circle at 50% 52%,
+            rgba(163, 69, 18, 0.34) 0,
+            rgba(163, 69, 18, 0.14) 32vmin,
+            transparent 72vmin),
+        /* lembrança leve do sol, no canto */
+        radial-gradient(circle at 12% 14%,
+            rgba(238, 161, 29, 0.10) 0,
+            transparent 34vmin),
+        linear-gradient(180deg, #170A04 0%, #110703 100%);
+}
+ 
+/* estampa geométrica, visível só perto das bordas da tela */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+ 
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M32 6 L58 32 L32 58 L6 32 Z' fill='none' stroke='%23D19221' stroke-opacity='.10' stroke-width='1.2'/%3E%3Cpath d='M32 18 L46 32 L32 46 L18 32 Z' fill='none' stroke='%23CB7218' stroke-opacity='.08' stroke-width='1'/%3E%3Ccircle cx='32' cy='32' r='1.6' fill='%23D19221' fill-opacity='.14'/%3E%3C/svg%3E") center / 64px 64px repeat;
+ 
+    -webkit-mask-image: radial-gradient(ellipse at 50% 50%, transparent 38%, #000 95%);
+    mask-image: radial-gradient(ellipse at 50% 50%, transparent 38%, #000 95%);
+}
+ 
+ 
+/* =========================
+   GLOBO
+   ========================= */
+ 
 #globo {
+    position: relative;
+    z-index: 1;
     width: 100vw;
     height: 100vh;
 }
-
+ 
+#globo canvas {
+    display: block;
+}
+ 
+ 
+/* =========================
+   TÍTULO
+   ========================= */
+ 
 .titulo {
     position: absolute;
-    top: 40px;
+    top: 36px;
     left: 50px;
-    color: white;
     z-index: 10;
-    font-family: "Arial Black", Gadget, sans-serif;
+ 
+    color: var(--creme);
+    font-family: var(--fonte-titulo);
 }
-
+ 
 .titulo h1 {
-    font-size: 50px;
-    letter-spacing: 3px;
+    font-size: 54px;
+    font-weight: 900;
+    letter-spacing: 6px;
+    line-height: 1;
+ 
+    color: var(--creme);
+    text-shadow: 3px 3px 0 var(--terracota);
 }
-
+ 
+.titulo::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 16px;
+    margin-top: 12px;
+ 
+    background: var(--faixa-triangulos) repeat-x left center / auto 16px;
+    border-radius: 2px;
+}
+ 
 .titulo p {
-    margin-top: 8px;
+    margin-top: 10px;
+ 
+    font-family: var(--fonte-texto);
     font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+ 
+    color: var(--sol);
 }
-
+ 
+ 
+/* =========================
+   CARD DA CIENTISTA
+   ========================= */
+ 
 #infoCientista {
     position: fixed;
-
+ 
     top: 50%;
     right: 40px;
-
+ 
     transform: translateY(-50%);
-
-    width: 380px;
-    max-height: 75vh;
-
-    padding: 25px;
-
-    background: rgba(10, 20, 18, 0.95);
-
-    color: white;
-
-    border-radius: 15px;
-
-    border: 1px solid rgba(255, 255, 255, 0.2);
-
-    font-family: Arial, sans-serif;
-
+ 
+    width: min(400px, 92vw);
+    max-height: 78vh;
+ 
+    padding: 40px 26px 26px;
+ 
+    background:
+        var(--faixa-triangulos) repeat-x left top / auto 14px,
+        var(--creme);
+    background-attachment: local, scroll;
+ 
+    color: var(--marrom);
+ 
+    border-radius: 16px;
+    border: 3px solid var(--marrom);
+ 
+    font-family: var(--fonte-texto);
+ 
     display: none;
-
+ 
     z-index: 10;
-
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-
+ 
+    box-shadow:
+        0 0 0 4px var(--ouro),
+        0 18px 40px rgba(0, 0, 0, 0.55);
+ 
     overflow-y: auto;
 }
-
+ 
 #infoCientista h2 {
     margin-top: 0;
+    margin-bottom: 6px;
+ 
+    font-family: var(--fonte-titulo);
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+ 
+    color: var(--terracota);
 }
-
+ 
+#infoCientista h3 {
+    margin: 20px 0 8px;
+    padding-bottom: 8px;
+ 
+    font-family: var(--fonte-titulo);
+    font-size: 18px;
+    color: var(--mata);
+ 
+    background: var(--faixa-circulos) repeat-x left bottom / auto 12px;
+}
+ 
 #infoCientista p {
-    line-height: 1.5;
+    line-height: 1.6;
+    font-size: 15px;
 }
-
+ 
+#paisCientista,
+#areaCientista {
+    font-weight: 800;
+    color: var(--oliva-esc);
+}
+ 
 #fecharInfo {
     position: absolute;
-
-    top: 10px;
+ 
+    top: 22px;
     right: 12px;
-
-    background: none;
-
-    border: none;
-
-    color: white;
-
-    font-size: 25px;
-
+ 
+    width: 32px;
+    height: 32px;
+ 
+    background: var(--marrom);
+    color: var(--creme);
+ 
+    border: 2px solid var(--ouro);
+    border-radius: 50%;
+ 
+    font-size: 20px;
+    line-height: 1;
+ 
     cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+}
+ 
+#fecharInfo:hover {
+    background: var(--terracota);
+    transform: rotate(90deg);
+}
+ 
+ 
+/* =========================
+   BOTÃO DO QUIZ
+   ========================= */
+ 
+#abrirQuiz {
+    position: fixed;
+    left: 50px;
+    bottom: 40px;
+    z-index: 10;
+ 
+    padding: 14px 24px;
+ 
+    background: var(--terracota);
+    color: var(--creme);
+ 
+    border: 3px solid var(--ouro);
+    border-radius: 40px;
+ 
+    font-family: var(--fonte-texto);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+ 
+    cursor: pointer;
+ 
+    box-shadow:
+        0 0 0 3px var(--marrom),
+        0 8px 22px rgba(0, 0, 0, 0.5);
+ 
+    transition: transform 0.15s, background 0.15s;
+}
+ 
+#abrirQuiz:hover {
+    background: var(--laranja);
+    transform: translateY(-2px) scale(1.03);
+}
+ 
+ 
+/* =========================
+   QUIZ
+   ========================= */
+ 
+#quiz {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+ 
+    display: none;
+    align-items: center;
+    justify-content: center;
+ 
+    background: rgba(30, 10, 0, 0.82);
+    backdrop-filter: blur(3px);
+}
+ 
+#quizCaixa {
+    position: relative;
+ 
+    width: 580px;
+    max-width: 92vw;
+    max-height: 90vh;
+ 
+    padding: 42px 34px 40px;
+ 
+    background:
+        var(--faixa-triangulos) repeat-x left top / auto 14px,
+        var(--faixa-triangulos) repeat-x left bottom / auto 14px,
+        var(--creme);
+    background-attachment: local, scroll, scroll;
+ 
+    color: var(--marrom);
+ 
+    border-radius: 18px;
+    border: 3px solid var(--marrom);
+ 
+    box-shadow:
+        0 0 0 4px var(--ouro),
+        0 20px 50px rgba(0, 0, 0, 0.65);
+ 
+    overflow-y: auto;
+    font-family: var(--fonte-texto);
+}
+ 
+#fecharQuiz {
+    position: absolute;
+    top: 24px;
+    right: 14px;
+ 
+    width: 34px;
+    height: 34px;
+ 
+    background: var(--marrom);
+    color: var(--creme);
+ 
+    border: 2px solid var(--ouro);
+    border-radius: 50%;
+ 
+    font-size: 22px;
+    line-height: 1;
+ 
+    cursor: pointer;
+    transition: background 0.15s, transform 0.15s;
+}
+ 
+#fecharQuiz:hover {
+    background: var(--terracota);
+    transform: rotate(90deg);
+}
+ 
+.quiz-barra {
+    width: 100%;
+    height: 10px;
+    margin-bottom: 14px;
+ 
+    background: var(--creme-esc);
+    border: 2px solid var(--marrom);
+    border-radius: 6px;
+    overflow: hidden;
+}
+ 
+.quiz-barra-preenchida {
+    height: 100%;
+    background: linear-gradient(90deg, var(--terracota), var(--ouro));
+    transition: width 0.3s;
+}
+ 
+.quiz-contador {
+    margin-bottom: 8px;
+ 
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+ 
+    color: var(--oliva-esc);
+}
+ 
+.quiz-pergunta {
+    margin-bottom: 20px;
+ 
+    font-family: var(--fonte-titulo);
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.25;
+ 
+    color: var(--marrom);
+}
+ 
+.quiz-opcoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+ 
+.quiz-opcao {
+    position: relative;
+ 
+    padding: 14px 16px 14px 44px;
+ 
+    background: var(--papel);
+    color: var(--marrom);
+ 
+    border: 2px solid var(--creme-esc);
+    border-radius: 12px;
+ 
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    font-family: var(--fonte-texto);
+ 
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+ 
+/* losango decorativo à esquerda de cada opção */
+.quiz-opcao::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 50%;
+ 
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+ 
+    background: var(--laranja);
+    transform: rotate(45deg);
+    transition: background 0.15s;
+}
+ 
+.quiz-opcao:hover {
+    background: #FFE9BF;
+    border-color: var(--terracota);
+    transform: translateX(3px);
+}
+ 
+.quiz-opcao:hover::before {
+    background: var(--terracota);
+}
+ 
+.quiz-secundario {
+    margin-top: 16px;
+    padding: 10px 16px;
+ 
+    background: transparent;
+    color: var(--oliva-esc);
+ 
+    border: 2px solid var(--oliva);
+    border-radius: 10px;
+ 
+    font-size: 14px;
+    font-weight: 800;
+    font-family: var(--fonte-texto);
+ 
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+ 
+.quiz-secundario:hover {
+    background: var(--oliva-esc);
+    color: var(--creme);
+}
+ 
+.quiz-afinidade {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 4px 14px;
+ 
+    background: var(--terracota);
+    color: var(--creme);
+ 
+    border-radius: 20px;
+ 
+    font-size: 16px;
+    font-weight: 800;
+}
+ 
+.quiz-detalhe {
+    margin-bottom: 6px;
+    line-height: 1.5;
+}
+ 
+.quiz-detalhe strong {
+    color: var(--terracota);
+}
+ 
+.quiz-descricao {
+    margin: 14px 0 20px;
+    line-height: 1.65;
+}
+ 
+.quiz-subtitulo {
+    margin-bottom: 6px;
+    padding-bottom: 8px;
+ 
+    font-family: var(--fonte-titulo);
+    font-size: 16px;
+    color: var(--mata);
+ 
+    background: var(--faixa-circulos) repeat-x left bottom / auto 12px;
+}
+ 
+.quiz-ranking-item {
+    display: flex;
+    justify-content: space-between;
+ 
+    padding: 10px 0;
+ 
+    font-weight: 600;
+    border-bottom: 1px dashed var(--oliva);
+}
+ 
+.quiz-ranking-item span:last-child {
+    color: var(--terracota);
+    font-weight: 800;
+}
+ 
+.quiz-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+ 
+.quiz-acoes .quiz-opcao {
+    padding-left: 16px;
+    text-align: center;
+ 
+    background: var(--terracota);
+    color: var(--creme);
+    border-color: var(--marrom);
+    font-weight: 800;
+}
+ 
+.quiz-acoes .quiz-opcao::before {
+    display: none;
+}
+ 
+.quiz-acoes .quiz-opcao:hover {
+    background: var(--laranja);
+    transform: translateY(-2px);
+}
+ 
+.quiz-acoes .quiz-secundario {
+    margin-top: 0;
+}
+ 
+ 
+/* =========================
+   TELAS PEQUENAS
+   ========================= */
+ 
+@media (max-width: 700px) {
+ 
+    .titulo {
+        top: 20px;
+        left: 20px;
+    }
+ 
+    .titulo h1 {
+        font-size: 38px;
+        letter-spacing: 4px;
+    }
+ 
+    .titulo p {
+        font-size: 14px;
+    }
+ 
+    #abrirQuiz {
+        left: 20px;
+        bottom: 20px;
+        font-size: 14px;
+        padding: 12px 18px;
+    }
+ 
+    #infoCientista {
+        right: 4vw;
+        padding: 38px 20px 20px;
+    }
+ 
+    #quizCaixa {
+        padding: 38px 20px 34px;
+    }
+ 
+    .quiz-pergunta {
+        font-size: 20px;
+    }
 }
