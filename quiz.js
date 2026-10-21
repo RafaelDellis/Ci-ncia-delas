@@ -1,31 +1,17 @@
 (function () {
 
-    // =========================
-    // ELEMENTOS DA PÁGINA
-    // =========================
-
     const botaoAbrir = document.getElementById("abrirQuiz");
     const telaQuiz = document.getElementById("quiz");
     const botaoFechar = document.getElementById("fecharQuiz");
     const conteudo = document.getElementById("quizConteudo");
 
-
-    // =========================
-    // ESTADO DO QUIZ
-    // =========================
-
-    let perguntas = null;      // perguntas vindas do Supabase
-    let cientistas = [];       // cientistas vindas do Supabase
-    let maximos = {};          // pontuação máxima possível de cada cientista
+    let perguntas = null;
+    let cientistas = [];
+    let maximos = {};
 
     let indiceAtual = 0;
     let pontuacao = {};
     let respostasEscolhidas = [];
-
-
-    // =========================
-    // UTILIDADES
-    // =========================
 
     function escapar(texto) {
 
@@ -36,9 +22,6 @@
             .replace(/"/g, "&quot;");
 
     }
-
-
-    // Corta um texto longo no fim de uma frase, perto do limite
 
     function resumir(texto, limite) {
 
@@ -58,7 +41,6 @@
 
     }
 
-
     function mostrarMensagem(texto, comBotaoTentar) {
 
         let html = '<p class="quiz-descricao">' + escapar(texto) + '</p>';
@@ -74,11 +56,6 @@
         }
 
     }
-
-
-    // =========================
-    // CARREGAR DADOS DO SUPABASE
-    // =========================
 
     async function carregarDados() {
 
@@ -138,10 +115,6 @@
 
     }
 
-
-    // Pontuação máxima que cada cientista pode alcançar:
-    // soma, em cada pergunta, do maior valor que ela pode receber.
-
     function calcularMaximos() {
 
         maximos = {};
@@ -172,11 +145,6 @@
 
     }
 
-
-    // =========================
-    // CONTROLE DO QUIZ
-    // =========================
-
     function somarPontos(resposta) {
 
         resposta.pontos.forEach(function (ponto) {
@@ -189,7 +157,6 @@
 
     }
 
-
     function iniciarQuiz() {
 
         indiceAtual = 0;
@@ -199,7 +166,6 @@
         mostrarPergunta();
 
     }
-
 
     function mostrarPergunta() {
 
@@ -240,7 +206,6 @@
 
     }
 
-
     function escolherResposta(indiceResposta) {
 
         const resposta = perguntas[indiceAtual].respostas[indiceResposta];
@@ -259,12 +224,9 @@
 
     }
 
-
     function voltarPergunta() {
 
         indiceAtual--;
-
-        // Recalcula a pontuação até a pergunta atual
 
         pontuacao = {};
 
@@ -277,12 +239,6 @@
         mostrarPergunta();
 
     }
-
-
-    // =========================
-    // CÁLCULO DO RESULTADO
-    // Afinidade = pontos feitos / pontos possíveis
-    // =========================
 
     function calcularRanking() {
 
@@ -313,7 +269,6 @@
             });
 
     }
-
 
     function mostrarResultado() {
 
@@ -376,11 +331,6 @@
 
     }
 
-
-    // =========================
-    // INTEGRAÇÃO COM O GLOBO
-    // =========================
-
     function encontrarMarcador(cientista) {
 
         if (typeof marcadoresCientistas === "undefined") {
@@ -401,9 +351,7 @@
 
     }
 
-
     let rotacaoAlvo = null;
-
 
     function irParaCientista(cientista) {
 
@@ -413,16 +361,12 @@
             return;
         }
 
-        // Gira o globo para o ponto ficar de frente para a câmera
-
         const direcao = marcador.position.clone().normalize();
 
         rotacaoAlvo = new THREE.Quaternion().setFromUnitVectors(
             direcao,
             new THREE.Vector3(0, 0, 1)
         );
-
-        // Abre o card da cientista
 
         const c = marcador.userData.cientista;
 
@@ -434,7 +378,6 @@
         document.getElementById("infoCientista").style.display = "block";
 
     }
-
 
     function animarRotacao() {
 
@@ -457,23 +400,13 @@
 
     animarRotacao();
 
-
-    // Se o usuário arrastar o globo, cancela a rotação automática
-
-    renderizador.domElement.addEventListener("mousedown", function () {
+    renderizador.domElement.addEventListener("pointerdown", function () {
         rotacaoAlvo = null;
     });
-
-
-    // =========================
-    // ABRIR E FECHAR
-    // =========================
 
     async function abrirQuiz() {
 
         telaQuiz.style.display = "flex";
-
-        // Carrega do banco apenas na primeira vez
 
         if (!perguntas) {
 
@@ -499,13 +432,11 @@
 
     }
 
-
     function fecharQuiz() {
 
         telaQuiz.style.display = "none";
 
     }
-
 
     botaoAbrir.addEventListener("click", abrirQuiz);
     botaoFechar.addEventListener("click", fecharQuiz);
