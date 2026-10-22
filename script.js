@@ -63,6 +63,9 @@ luz.position.set(5, 3, 5);
 
 cena.add(luz);
 
+terra.rotation.y = -1.92;
+terra.rotation.x = 0;
+
 
 const luzAmbiente = new THREE.AmbientLight(
     0xffffff,
